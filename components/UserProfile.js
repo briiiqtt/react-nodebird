@@ -1,34 +1,31 @@
-import { Form, Input, Button } from "antd";
-import Link from "next/link";
+import { useCallback } from "react";
+import { Card, Avatar, Button } from "antd";
 
-const UserProfile = () => {
+const UserProfile = ({ setIsLoggedIn }) => {
+  const onLogOut = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
   return (
-    <Form>
-      <div>
-        <label htmlFor="user-id">아이디</label>
-        <br />
-        <Input name="user-id" value={id} onChange={onChangeId} required />
-      </div>
-      <div>
-        <label htmlFor="user-password">비밀번호</label>
-        <br />
-        <Input
-          name="user-password"
-          type="password"
-          value={password}
-          onChange={onChangePassword}
-          required
-        />
-      </div>
-      <div>
-        <Button type="primary" htmlType="submit" loading={false}>
-          로그인
-        </Button>
-        <Link href="/signup">
-          <a>회원가입</a>
-        </Link>
-      </div>
-    </Form>
+    <Card
+      actions={[
+        <div key="twit">
+          짹짹
+          <br />0
+        </div>,
+        <div key="followings">
+          팔로잉
+          <br />0
+        </div>,
+        <div key="followers">
+          팔로워
+          <br />0
+        </div>,
+      ]}
+    >
+      <Card.Meta avatar={<Avatar>HI</Avatar>} title="ddfdf" />
+      <Button onClick={onLogOut}>로그아웃</Button>
+    </Card>
   );
 };
 

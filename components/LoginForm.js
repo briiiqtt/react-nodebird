@@ -7,11 +7,13 @@ const ButtonWrapper = styled.div`
   margin-top: 100px;
 `;
 
-const LoginForm = () => {
+const LoginForm = ({ setIsLoggedIn }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
-  const formStyle = useMemo(() => {}, [{ margin: 300 }]);
+  const formStyle = useMemo(() => {
+    return { padding: "10px" };
+  }, []);
 
   const onChangeId = useCallback((e) => {
     setId(e.target.value);
@@ -21,8 +23,13 @@ const LoginForm = () => {
     setPassword(e.target.value);
   }, []);
 
+  const onSubmitForm = useCallback(() => {
+    console.log(id, password);
+    setIsLoggedIn(true);
+  }, [id, password]);
+
   return (
-    <Form>
+    <Form onFinish={onSubmitForm}>
       <div style={formStyle}>
         <div>
           <label htmlFor="user-id">아이디</label>
