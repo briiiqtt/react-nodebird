@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { Menu, Input, Row, Col } from "antd";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import { useSelector } from "react-redux";
 
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
@@ -10,14 +11,32 @@ const SearchInput = styled(Input.Search)`
   vertical-align: middle;
 `;
 
+const Global = createGlobalStyle`
+  .ant-row{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .ant-col:first-child {
+    padding-left: 0 !imporatant;
+  }
+
+  .ant-col:last-child {
+    padding-left: 0 !imporatant;
+  }
+`;
+
 const AppLayout = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const searchInputStyle = useMemo(() => {
     return { verticalAlign: "middle" };
   }, []);
 
   return (
     <div>
+      <Global />
       <Menu mode="horizontal">
         <Menu.Item>
           <Link href="/">
@@ -41,9 +60,9 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         {isLoggedIn ? (
-          <UserProfile setIsLoggedIn={setIsLoggedIn} />
+          <UserProfile /*setIsLoggedIn={setIsLoggedIn}*/ />
         ) : (
-          <LoginForm setIsLoggedIn={setIsLoggedIn} />
+          <LoginForm /*setIsLoggedIn={setIsLoggedIn}*/ />
         )}
         <Col xs={24} md={12}>
           {children}
