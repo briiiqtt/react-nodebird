@@ -6,7 +6,7 @@ export const initialState = {
         id: 1,
         nickname: "제로초",
       },
-      content: "ㅎㅇㅎㅇ",
+      content: "ㅎㅇㅎㅇ #해시태그 #게시글",
       Images: [
         {
           src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ02jcTAy6AjS6poKeVmEjp-q5A1-VowyNWIQ&usqp=CAU",
