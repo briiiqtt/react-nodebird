@@ -1,5 +1,7 @@
 export const initialState = {
+  isLoggingIn: false,
   isLoggedIn: false,
+  isLoggingOut: false,
   me: null,
   signUpData: {},
   loginData: {},
@@ -43,7 +45,15 @@ export const logoutFailureAction = () => {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOG_IN_REQUEST":
+      return { ...state, isLogginIn: true, isLoggedIn: true, me: action.data };
+    case "LOG_IN_SUCCESS":
+      return { ...state, isLogginIn: false, isLoggedIn: true };
+    case "LOG_IN_FAILURE":
       return { ...state, isLoggedIn: true, me: action.data };
+    case "LOG_OUT_REQUEST":
+      return { ...state, isLoggedIn: false, me: null };
+    case "LOG_OUT_REQUEST":
+      return { ...state, isLoggedIn: false, me: null };
     case "LOG_OUT_REQUEST":
       return { ...state, isLoggedIn: false, me: null };
     default:

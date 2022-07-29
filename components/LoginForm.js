@@ -30,7 +30,7 @@ const LoginForm = (/*{ setIsLoggedIn }*/) => {
   const onSubmitForm = useCallback(() => {
     console.log(id, password);
     // setIsLoggedIn(true);
-    dispatch(loginAction({ id, password }));
+    dispatch(loginRequestAction({ id, password }));
   }, [id, password]);
 
   return (
