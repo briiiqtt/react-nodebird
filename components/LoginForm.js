@@ -2,7 +2,7 @@ import { useState, useCallback, useMemo } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginRequestAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
@@ -12,15 +12,17 @@ const ButtonWrapper = styled.div`
 const LoginForm = (/*{ setIsLoggedIn }*/) => {
   const dispatch = useDispatch();
 
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { logInLoading } = useSelector((state) => state.user);
 
   const formStyle = useMemo(() => {
     return { padding: "10px" };
   }, []);
 
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
+  const onChangeEmail = useCallback((e) => {
+    setEmail(e.target.value);
   }, []);
 
   const onChangePassword = useCallback((e) => {
@@ -28,18 +30,24 @@ const LoginForm = (/*{ setIsLoggedIn }*/) => {
   }, []);
 
   const onSubmitForm = useCallback(() => {
-    console.log(id, password);
+    console.log(email, password);
     // setIsLoggedIn(true);
-    dispatch(loginRequestAction({ id, password }));
-  }, [id, password]);
+    dispatch(loginRequestAction({ email, password }));
+  }, [email, password]);
 
   return (
     <Form onFinish={onSubmitForm}>
       <div style={formStyle}>
         <div>
-          <label htmlFor="user-id">아이디</label>
+          <label htmlFor="user-id">이메일</label>
           <br />
-          <Input name="user-id" value={id} onChange={onChangeId} required />
+          <Input
+            name="user-id"
+            value={email}
+            onChange={onChangeEmail}
+            type="email"
+            required
+          />
         </div>
         <div>
           <label htmlFor="user-password">비밀번호</label>
@@ -54,7 +62,7 @@ const LoginForm = (/*{ setIsLoggedIn }*/) => {
         </div>
         <ButtonWrapper>
           <div>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={logInLoading}>
               로그인
             </Button>
             <Link href="/signup">

@@ -28,7 +28,7 @@ const Global = createGlobalStyle`
 
 const AppLayout = ({ children }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const { me } = useSelector((state) => state.user.logInDone);
 
   const searchInputStyle = useMemo(() => {
     return { verticalAlign: "middle" };
@@ -59,7 +59,7 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
-        {isLoggedIn ? (
+        {me ? (
           <UserProfile /*setIsLoggedIn={setIsLoggedIn}*/ />
         ) : (
           <LoginForm /*setIsLoggedIn={setIsLoggedIn}*/ />
