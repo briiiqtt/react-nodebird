@@ -28,7 +28,7 @@ const Global = createGlobalStyle`
 
 const AppLayout = ({ children }) => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { me } = useSelector((state) => state.user.logInDone);
+  const { me } = useSelector((state) => state.user);
 
   const searchInputStyle = useMemo(() => {
     return { verticalAlign: "middle" };

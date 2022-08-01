@@ -24,13 +24,13 @@ export const initialState = {
       ],
     },
   ],
-  imagePaths: [],
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+  imagePaths: [],
 };
 
 export const ADD_POST_REQUEST = "ADD_POST_REQUEST";
@@ -66,6 +66,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST_REQUEST:
       return {
+        ...state,
         addPostLoading: true,
         addPostDone: false,
         addPostError: null,
@@ -79,12 +80,14 @@ const reducer = (state = initialState, action) => {
       };
     case ADD_POST_FAILURE:
       return {
+        ...state,
         addPostLoading: false,
         addPostError: action.error,
       };
 
     case ADD_COMMENT_REQUEST:
       return {
+        ...state,
         addCommentLoading: true,
         addCommentDone: false,
         addCommentError: null,
@@ -97,6 +100,7 @@ const reducer = (state = initialState, action) => {
       };
     case ADD_COMMENT_FAILURE:
       return {
+        ...state,
         addCommentLoading: false,
         addCommentError: action.error,
       };
