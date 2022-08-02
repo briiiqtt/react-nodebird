@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   EllipsisOutlined,
   HeartOutlined,
@@ -6,13 +5,15 @@ import {
   MessageOutlined,
   RetweetOutlined,
 } from "@ant-design/icons";
-import { Card, Popover, Button, Avatar, List, Comment } from "antd";
-import ButtonGroup from "antd/lib/button/button-group";
-import { useState, useCallback } from "react";
+import { Avatar, Button, Card, Comment, List, Popover } from "antd";
+import React, { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import PostImages from "./PostImages";
+import { REMOVE_POST_REQUEST } from "../reducers/post";
 import CommentForm from "./CommentForm";
 import PostCardContent from "./PostCardContent";
+import PostImages from "./PostImages";
+import FollowButton from "./FollowButton";
 
 const PostCard = ({ post }) => {
   // const { me } = useSelector((state) => state.user);
@@ -25,6 +26,17 @@ const PostCard = ({ post }) => {
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
   }, []);
+
+  const dispatch = useDispatch();
+
+  const onRemovePost = useCallback(() => {
+    dispatch({
+      type: REMOVE_POST_REQUEST,
+      data: post.id,
+    });
+  });
+
+  const { removePostLoading } = useSelector((state) => state.user);
 
   const id = useSelector((state) => state.user.me?.id);
   return (
@@ -51,7 +63,13 @@ const PostCard = ({ post }) => {
                 {id && post.User.id === id ? (
                   <>
                     <Button type="">수정</Button>
-                    <Button type="danger">삭제</Button>
+                    <Button
+                      type="danger"
+                      onClick={onRemovePost}
+                      loading={removePostLoading}
+                    >
+                      삭제
+                    </Button>
                   </>
                 ) : (
                   <Button type="">신고</Button>
@@ -62,6 +80,7 @@ const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
+        extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
