@@ -1,6 +1,3 @@
-const { DataTypes } = require("sequelize/types");
-const { sequelize } = require(".");
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     "User" /* User (모델이름) -> users(소문자, 복수형) */,
