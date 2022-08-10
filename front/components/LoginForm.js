@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
@@ -15,7 +15,13 @@ const LoginForm = (/*{ setIsLoggedIn }*/) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { logInLoading } = useSelector((state) => state.user);
+  const { logInLoading, logInError } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
+    }
+  }, [logInError]);
 
   const formStyle = useMemo(() => {
     return { padding: "10px" };

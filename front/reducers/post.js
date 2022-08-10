@@ -32,7 +32,7 @@ export const generateDummyPost = (number) =>
       content: faker.lorem.paragraph(),
       Images: [
         {
-          src: faker.image.image(),
+          src: null, //faker.image.image(),
         },
       ],
       Comments: [
@@ -72,24 +72,6 @@ export const addComment = (data) => ({
   data,
 });
 
-const dummyPost = (data) => ({
-  id: data.id,
-  content: data.content,
-  User: {
-    id: 1,
-    nickname: "제로초",
-  },
-  Images: [],
-  Comments: [],
-});
-const dummyComment = (data) => ({
-  id: shortid.generate(),
-  User: {
-    id: 1,
-    nickname: "제로조",
-  },
-  content: data,
-});
 // reducer: 이전 상태를 액션을 통해 다음 상태로 만들어내는 함수(불변성은 지키면서)
 const reducer = (state = initialState, action) => {
   return produce(state, (draft) => {
@@ -118,7 +100,7 @@ const reducer = (state = initialState, action) => {
         draft.addPostLoading = false;
         draft.addPostDone = true;
         // draft.mainPosts = [dummyPost(action.data), ...state.mainPosts];
-        draft.mainPosts.unshift(dummyPost(action.data));
+        draft.mainPosts.unshift(action.data);
         break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
@@ -131,8 +113,8 @@ const reducer = (state = initialState, action) => {
         break;
       case ADD_COMMENT_SUCCESS:
         // eslint-disable-next-line no-case-declarations
-        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
-        post.Comments.unshift(dummyComment(action.data.content));
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Comments.unshift(action.data);
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;

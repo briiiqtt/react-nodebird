@@ -1,6 +1,8 @@
 import Head from "next/head";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import Router from "next/router";
 
 import { Form, Input, Checkbox, Button } from "antd";
 import AppLayout from "../components/AppLayout";
@@ -9,7 +11,27 @@ import { SIGN_UP_REQUEST } from "../reducers/user";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { signUpLoading } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone, signUpError, me } = useSelector(
+    (state) => state.user
+  );
+
+  useEffect(() => {
+    if (me && me.id) {
+      Router.replace("/");
+    }
+  }, [me && me.id]);
+
+  useEffect(() => {
+    if (signUpDone) {
+      Router.push("/");
+    }
+  }, [signUpDone]);
+
+  useEffect(() => {
+    if (signUpError) {
+      alert(signUpError);
+    }
+  }, [signUpError]);
 
   const [email, onChangeEmail] = useInput("");
 
@@ -33,9 +55,9 @@ const Signup = () => {
     setTermError(false);
   }, []);
 
-  const formStyle = useMemo(() => {
-    return { padding: "10px" };
-  }, []);
+  // const formStyle = useMemo(() => {
+  //   return { padding: "10px" };
+  // }, []);
 
   const onSubmit = useCallback(() => {
     if (password !== passwordCheck) {
@@ -45,7 +67,7 @@ const Signup = () => {
       return setTermError(true);
     }
     console.log(email, nickname, password);
-    dispatch({ type: SIGN_UP_REQUEST, data: { email, password } });
+    dispatch({ type: SIGN_UP_REQUEST, data: { nickname, email, password } });
   }, [password, passwordCheck, term]);
 
   const errorStyle = useMemo(() => {
