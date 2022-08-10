@@ -1,54 +1,3 @@
-// const express = require("express");
-// const cors = require("cors");
-// const session = require("express-session");
-// const cookieParser = require("cookie-parser");
-// const passport = require("passport");
-// const dotenv = require("dotenv");
-
-// const userRouter = require("./routes/user");
-// const db = require("./models");
-// const passportConfig = require("./passport");
-
-// dotenv.config();
-
-// const app = express();
-// app.use(express.json()); //JSON -> req.body
-// app.use(express.urlencoded({ extended: true })); //form submit -> req.query
-// app.use(cookieParser(process.env.COOKIE_SECRET));
-// app.use(
-//   session({
-//     saveUninitialized: false,
-//     resave: false,
-//     secret: "nodebirdsecret",
-//   })
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passportConfig();
-
-// app.use(
-//   cors({
-//     origin: true,
-//     credentials: false,
-//   })
-// );
-
-// db.sequelize
-//   .sync()
-//   .then(() => console.log("db연결성공"))
-//   .catch((e) => console.error(e));
-
-// app.get("/", (req, res) => {
-//   res.send("hello express");
-// });
-
-// app.use("/user", userRouter);
-
-// app.listen((port = 3065), () => {
-//   console.log(port);
-// });
-
 const express = require("express");
 const cors = require("cors");
 const session = require("express-session");
@@ -73,7 +22,7 @@ passportConfig();
 
 app.use(
   cors({
-    origin: true,
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
